@@ -3,13 +3,18 @@
 <fieldset>
 	<legend>※商品名と終了日時を入力：</legend>
 	<?php
-		echo $this->Form->hidden('user_id', ['value' => $authuser['id']]);
-		echo '<p><strong>USER: ' . $authuser['username'] . '</strong></p>';
-		echo $this->Form->control('name');
-		echo $this->Form->hidden('finished', ['value' => 0]);
-		echo $this->Form->control('endtime');
+	echo $this->Form->hidden('user_id', ['value' => $authuser['id']]);
+	echo '<p><strong>USER: ' . $authuser['username'] . '</strong></p>';
+	echo $this->Form->control('name');
+	echo $this->Form->textarea('iteminfo');
+	echo $this->Form->file('image_name', array(
+		'label' => '',
+		'type' => 'file', 'multiple', 'enctype' => 'multipart/form-data', 'url' => '/img/action', 'type' => 'post'
+	));
+	echo $this->Form->hidden('finished', ['value' => 0]);
+	echo $this->Form->checkbox('finished');
+	echo $this->Form->control('endtime');
 	?>
 </fieldset>
 <?= $this->Form->button(__('Submit')) ?>
 <?= $this->Form->end() ?>
-
