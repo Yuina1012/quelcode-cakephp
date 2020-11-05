@@ -24,6 +24,8 @@
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('item_name') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('iteminfo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('finished') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('endtime') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
@@ -34,8 +36,10 @@
             <?php foreach ($biditems as $biditem): ?>
             <tr>
                 <td><?= $this->Number->format($biditem->id) ?></td>
-                <td><?= $biditem->has('user') ? $this->Html->link($biditem->user->id, ['controller' => 'Users', 'action' => 'view', $biditem->user->id]) : '' ?></td>
+                <td><?= $biditem->has('user') ? $this->Html->link($biditem->user->username, ['controller' => 'Users', 'action' => 'view', $biditem->user->id]) : '' ?></td>
                 <td><?= h($biditem->name) ?></td>
+                <td><?= h($biditem->item_name) ?></td>
+                <td><?= h($biditem->iteminfo) ?></td>
                 <td><?= h($biditem->finished) ?></td>
                 <td><?= h($biditem->endtime) ?></td>
                 <td><?= h($biditem->created) ?></td>

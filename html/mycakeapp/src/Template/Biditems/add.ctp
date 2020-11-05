@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Biditem $biditem
@@ -22,12 +21,12 @@
     <fieldset>
         <legend><?= __('Add Biditem') ?></legend>
         <?php
-        echo $this->Form->control('user_id', ['options' => $users]);
-        echo $this->Form->control('name');
-        echo $this->Form->control('image_name');
-        echo $this->Form->control('iteminfo');
-        echo $this->Form->control('finished');
-        echo $this->Form->control('endtime');
+            echo $this->Form->control('user_id', ['options' => $users]);
+            echo $this->Form->control('name');
+            echo $this->Form->control('item_name');
+            echo $this->Form->control('iteminfo');
+            echo $this->Form->control('finished');
+            echo $this->Form->control('endtime', ['empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

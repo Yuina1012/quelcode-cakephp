@@ -24,11 +24,19 @@
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('User') ?></th>
-            <td><?= $biditem->has('user') ? $this->Html->link($biditem->user->id, ['controller' => 'Users', 'action' => 'view', $biditem->user->id]) : '' ?></td>
+            <td><?= $biditem->has('user') ? $this->Html->link($biditem->user->username, ['controller' => 'Users', 'action' => 'view', $biditem->user->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Name') ?></th>
             <td><?= h($biditem->name) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Item Name') ?></th>
+            <td><?= h($biditem->item_name) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Iteminfo') ?></th>
+            <td><?= h($biditem->iteminfo) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>

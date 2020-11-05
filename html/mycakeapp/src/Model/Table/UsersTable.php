@@ -9,8 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\BidinfoTable&\Cake\ORM\Association\HasMany $Bidinfo
  * @property \App\Model\Table\BiditemsTable&\Cake\ORM\Association\HasMany $Biditems
+ * @property \App\Model\Table\BidinfoTable&\Cake\ORM\Association\HasMany $Bidinfo
  * @property \App\Model\Table\BidmessagesTable&\Cake\ORM\Association\HasMany $Bidmessages
  * @property \App\Model\Table\BidrequestsTable&\Cake\ORM\Association\HasMany $Bidrequests
  *
@@ -36,13 +36,13 @@ class UsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setDisplayField('id');
+        $this->setDisplayField('username');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Bidinfo', [
+        $this->hasMany('Biditems', [
             'foreignKey' => 'user_id',
         ]);
-        $this->hasMany('Biditems', [
+        $this->hasMany('Bidinfo', [
             'foreignKey' => 'user_id',
         ]);
         $this->hasMany('Bidmessages', [
