@@ -14,7 +14,9 @@
 	</tr>
 	<tr>
 		<th scope="row">商品画像</th>
-		<td><?= $this->format($biditem->image_name) ?></td>
+		<td><?= $this->Html->image($biditem->image_name) ?></td>
+	</tr>
+	<tr>	
 		<th scope="row">商品ID</th>
 		<td><?= $this->Number->format($biditem->id) ?></td>
 	</tr>
