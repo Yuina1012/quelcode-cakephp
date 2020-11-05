@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -46,7 +47,7 @@ class BiditemsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
-        $this->hasOne('Bidinfo', [
+        $this->hasMany('Bidinfo', [
             'foreignKey' => 'biditem_id',
         ]);
         $this->hasMany('Bidrequests', [
@@ -62,6 +63,8 @@ class BiditemsTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
+        $validator->provider('Custom', 'App\Model\Validation\CustomValidation');
+
         $validator
             ->integer('id')
             ->allowEmptyString('id', null, 'create');
@@ -73,10 +76,10 @@ class BiditemsTable extends Table
             ->notEmptyString('name');
 
         $validator
-            ->scalar('item_name')
-            ->maxLength('item_name', 100)
-            ->requirePresence('item_name', 'create')
-            ->notEmptyString('item_name');
+            ->scalar('image_name')
+            ->maxLength('image_name', 255)
+            ->requirePresence('image_name', 'create')
+            ->notEmptyFile('image_name');
 
         $validator
             ->scalar('iteminfo')
@@ -85,13 +88,15 @@ class BiditemsTable extends Table
             ->notEmptyString('iteminfo');
 
         $validator
-            ->boolean('finished')
+            ->scalar('finished')
+            ->maxLength('finished', 255)
             ->requirePresence('finished', 'create')
             ->notEmptyString('finished');
 
         $validator
             ->dateTime('endtime')
-            ->allowEmptyDateTime('endtime');
+            ->requirePresence('endtime', 'create')
+            ->notEmptyDateTime('endtime');
 
         return $validator;
     }
@@ -105,6 +110,7 @@ class BiditemsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        // 拡張子の限定
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;
