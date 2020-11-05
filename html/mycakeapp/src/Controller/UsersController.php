@@ -72,7 +72,7 @@ class UsersController extends AppController
             return true;
         }
         //一般ユーザーはfalse
-        if($user['role' == 'user']){
+        if($user['role'] == 'user'){
             return false;
         }//他のすべてfalse
         return false;
