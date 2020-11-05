@@ -90,31 +90,34 @@ class AuctionController extends AuctionBaseController
 		if ($this->request->is('post')) {
 			$data = $this->request->getData();
 			// Biditemインスタンスを用意
-			$biditem = $this->Biditems->newEntity($this->request->data);;
+			$biditem = $this->Biditems->newEntity($this->request->data);
 			// id,image_name以外を一旦保存
-			$this->Biditems->save($biditem);
-			// 画像データをとってくる
-			$file = $this->request->getData('image_name');
-			// pathinfoで配列で拡張子取り出す
-			$path_parts = pathinfo($biditem['image_name']);
-			// 拡張子を変数に入れる
-			$fileExt = $path_parts["extension"];
-			// パスの指定
-			$filepath = '/var/www/html/mycakeapp/webroot/img/auction/' . $biditem['id'] . '.' . $fileExt;
-			// ファイルデータを更新
-			$biditem->image_name  = $filepath;
-			// $biditemにフォームの送信内容を反映
-			$biditem = $this->Biditems->patchEntity($biditem, $this->request->getData());
-			// ファイル名を変更
-			$biditem->image_name = $biditem['id'] . '.' . $fileExt;
-			// $biditemを保存する
-			if ($this->Biditems->save($biditem)) {
-				// move_uploaded_fileで行先を指定
-				$success = move_uploaded_file($file, $filepath);
-				// 成功時のメッセージ
-				$this->Flash->success(__('保存しました。'));
-				// トップページ（index）に移動
-				return $this->redirect(['action' => 'index']);
+				// もし保存できたら
+			if($this->Biditems->save($biditem)){
+
+				// 画像データをとってくる
+				$file = $this->request->getData('image_name');
+				// pathinfoで配列で拡張子取り出す
+				$path_parts = pathinfo($biditem['image_name']);
+				// 拡張子を変数に入れる
+				$fileExt = $path_parts["extension"];
+				// パスの指定
+				$filepath = '/var/www/html/mycakeapp/webroot/img/auction/' . $biditem['id'] . '.' . $fileExt;
+				// ファイルデータを更新
+				$biditem->image_name  = $filepath;
+				// $biditemにフォームの送信内容を反映
+				$biditem = $this->Biditems->patchEntity($biditem, $this->request->getData());
+				// ファイル名を変更
+				$biditem->image_name = $biditem['id'] . '.' . $fileExt;
+				// $biditemを保存する
+				if ($this->Biditems->save($biditem)) {
+					// move_uploaded_fileで行先を指定
+					$success = move_uploaded_file($file, $filepath);
+					// 成功時のメッセージ
+					$this->Flash->success(__('保存しました。'));
+					// トップページ（index）に移動
+					return $this->redirect(['action' => 'index']);
+				}
 			}
 			// 失敗時のメッセージ
 			$this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
