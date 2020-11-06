@@ -89,16 +89,13 @@ class AuctionController extends AuctionBaseController
 		// POST送信時の処理
 		if ($this->request->is('post')) {
 			$data = $this->request->getData();
-			dd($_FILES, $data, $this->request->data, 'auctionControllerのaddメソットで');
 			// Biditemインスタンスを用意
 			$biditem = $this->Biditems->newEntity($this->request->data);
 			// id,image_name以外を一旦保存
 			// もし保存できたら
 			if ($this->Biditems->save($biditem)) {
-
 				// 画像データをとってくる
 				$file = $_FILES['image_name']['tmp_name'];
-				// dd($file);
 				// pathinfoで配列で拡張子取り出す
 				$path_parts = pathinfo($biditem['image_name']);
 				// 拡張子を変数に入れる

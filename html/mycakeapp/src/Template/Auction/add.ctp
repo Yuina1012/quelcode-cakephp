@@ -1,5 +1,5 @@
 <h2>商品を出品する</h2>
-<?= $this->Form->create($biditem) ?>
+<?= $this->Form->create($biditem,['type' => 'file']) ?>
 <fieldset>
 	<legend>※商品名と終了日時を入力：</legend>
 	<?php
@@ -7,12 +7,7 @@
 	echo '<p><strong>USER: ' . $authuser['username'] . '</strong></p>';
 	echo $this->Form->control('name');
 	echo $this->Form->textarea('iteminfo');
-	echo $this->Form->file('image_name', ['type' => 'file']
-		// , 
-		// array(
-		// // 	'name' => 'image_name',
-		// // 	'type' => 'file', 'multiple', 'enctype' => 'multipart/form-data', 'url' => '/img/action/', 'type' => 'post')
-	);
+	echo $this->Form->file('image_name');
 	echo $this->Form->hidden('finished', ['value' => 0]);
 	echo $this->Form->checkbox('finished');
 	echo $this->Form->control('endtime');
