@@ -7,10 +7,12 @@
 	echo '<p><strong>USER: ' . $authuser['username'] . '</strong></p>';
 	echo $this->Form->control('name');
 	echo $this->Form->textarea('iteminfo');
-	echo $this->Form->file('image_name', array(
-		'label' => '',
-		'type' => 'file', 'multiple', 'enctype' => 'multipart/form-data', 'url' => '/img/action', 'type' => 'post'
-	));
+	echo $this->Form->file('image_name', ['type' => 'file']
+		// , 
+		// array(
+		// // 	'name' => 'image_name',
+		// // 	'type' => 'file', 'multiple', 'enctype' => 'multipart/form-data', 'url' => '/img/action/', 'type' => 'post')
+	);
 	echo $this->Form->hidden('finished', ['value' => 0]);
 	echo $this->Form->checkbox('finished');
 	echo $this->Form->control('endtime');
