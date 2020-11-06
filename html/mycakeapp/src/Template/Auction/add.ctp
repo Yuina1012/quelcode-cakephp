@@ -8,7 +8,6 @@
 	echo $this->Form->control('name');
 	echo $this->Form->textarea('iteminfo');
 	echo $this->Form->file('image_name', ['type' => 'file']
-		// , 
 		// array(
 		// // 	'name' => 'image_name',
 		// // 	'type' => 'file', 'multiple', 'enctype' => 'multipart/form-data', 'url' => '/img/action/', 'type' => 'post')
