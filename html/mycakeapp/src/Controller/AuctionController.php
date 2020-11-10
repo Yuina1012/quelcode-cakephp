@@ -87,14 +87,16 @@ class AuctionController extends AuctionBaseController
 	public function add()
 	{
 		// Biditemインスタンスを用意
+		// 挿入
 		$biditem = $this->Biditems->newEntity();
 		// POST送信時の処理
 		if ($this->request->is('post')) {
-			// 挿入
+			// データ取得
 			$data = $this->request->getData();
+			// データ挿入
 			$biditem = $this->Biditems->newEntity($data);
 			$biditem->image_name = $_FILES['image_name']['name'];
-			// id,image_name以外を一旦保存
+			// id,image_name以外を一旦保存			
 			$this->Biditems->save($biditem);
 			// 更新
 			$biditem = $this->Biditems->patchEntity($biditem, $data);
