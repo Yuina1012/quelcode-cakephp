@@ -14,7 +14,7 @@ class CustomValidation extends Validation
 	public static function  isCheck($fileName)
 	{
 		// 拡張子
-		$result = (bool)preg_match('/\.gif$|\.png$|\.jpg$|\.jpeg$|\.bmp$/i', $fileName);
+		$result = (bool)preg_match('/\.gif$|\.png$|\.jpg$|\.jpeg$/i', $fileName);
 		// dd('isCheckを通った', $fileName, $result);
 		return $result;
 
