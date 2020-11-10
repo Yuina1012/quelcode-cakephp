@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 
 /**
@@ -63,7 +64,7 @@ class BiditemsTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-        $validator->provider('Custom', 'App\Model\Validation\CustomValidation');
+        $validator->setProvider('custom', 'App\Model\Validation\CustomValidation');
 
         $validator
             ->integer('id')
@@ -97,7 +98,6 @@ class BiditemsTable extends Table
             ->dateTime('endtime')
             ->requirePresence('endtime', 'create')
             ->notEmptyDateTime('endtime');
-
         return $validator;
     }
 
@@ -110,8 +110,17 @@ class BiditemsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        // 拡張子の限定
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules
+            ->add($rules->existsIn(['user_id'], 'Users'));
+
+        $rules
+            ->add(function ($entity) {
+                $result = (bool)preg_match('/\.gif$|\.png$|\.jpg$|\.jpeg$/i', $entity['image_name']);
+                return $result;
+            }, 'isCheck', [
+                'errorFields' => 'image_name',
+                'message' => '画像の拡張子'
+            ]);
 
         return $rules;
     }
