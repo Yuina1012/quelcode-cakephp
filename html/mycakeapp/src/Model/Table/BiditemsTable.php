@@ -64,7 +64,6 @@ class BiditemsTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-        $validator->setProvider('custom', 'App\Model\Validation\CustomValidation');
 
         $validator
             ->integer('id')
