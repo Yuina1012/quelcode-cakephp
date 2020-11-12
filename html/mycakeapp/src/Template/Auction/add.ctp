@@ -9,7 +9,6 @@
 	echo $this->Form->control('iteminfo');
 	echo $this->Form->file('image_name');
 	echo $this->Form->hidden('finished', ['value' => 0]);
-	echo $this->Form->checkbox('finished');
 	echo $this->Form->control('endtime');
 	?>
 </fieldset>
