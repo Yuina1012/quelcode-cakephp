@@ -118,7 +118,7 @@ class BiditemsTable extends Table
                 return $result;
             }, 'extension', [
                 'errorFields' => 'image_name',
-                'message' => '画像の拡張子'
+                'message' => '画像の拡張子が無効です'
             ]);
 
         return $rules;
