@@ -116,7 +116,7 @@ class BiditemsTable extends Table
             ->add(function ($entity) {
                 $result = (bool)preg_match('/\.gif$|\.png$|\.jpg$|\.jpeg$/i', $entity['image_name']);
                 return $result;
-            }, 'isCheck', [
+            }, 'extension', [
                 'errorFields' => 'image_name',
                 'message' => '画像の拡張子'
             ]);
