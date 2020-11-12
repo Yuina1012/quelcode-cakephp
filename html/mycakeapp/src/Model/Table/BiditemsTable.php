@@ -77,16 +77,16 @@ class BiditemsTable extends Table
             ->notEmptyString('name');
 
         $validator
+            ->scalar('iteminfo')
+            ->maxLength('iteminfo', 1000, '1000文字以内で入力してください')
+            ->requirePresence('iteminfo', 'create')
+            ->notEmptyString('iteminfo', '商品の詳細情報を入力してください');
+
+        $validator
             ->scalar('image_name')
             ->maxLength('image_name', 255)
             ->requirePresence('image_name', 'create')
-            ->notEmptyFile('image_name');
-
-        $validator
-            ->scalar('iteminfo')
-            ->maxLength('iteminfo', 1000)
-            ->requirePresence('iteminfo', 'create')
-            ->notEmptyString('iteminfo');
+            ->notEmptyFile('image_name', '画像ファイルを添付してください');
 
         $validator
             ->scalar('finished')
