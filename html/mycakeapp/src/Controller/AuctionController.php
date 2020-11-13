@@ -98,15 +98,16 @@ class AuctionController extends AuctionBaseController
 			$biditem->image_name = $_FILES['image_name']['name'];
 			// id,image_name以外を一旦保存			
 			$this->Biditems->save($biditem);
-			dd($biditem);
 			// 更新
 			$biditem = $this->Biditems->patchEntity($biditem, $data);
 			// pathinfoで配列で拡張子取り出す
 			$path_parts = pathinfo($biditem['image_name']);
 			// 拡張子を変数に入れる
-			$fileExt = $path_parts["extension"] ?? '';
+			$fileExt = $path_parts["extension"];
 			// ファイル名を変更
-			$biditem->image_name = $biditem['id'] . '.' . $fileExt;
+			if ($fileExt) {
+				$biditem->image_name = $biditem['id'] . '.' . $fileExt;
+			}
 			// もし保存できたら
 			if ($this->Biditems->save($biditem)) {
 				// 画像データをとってくる

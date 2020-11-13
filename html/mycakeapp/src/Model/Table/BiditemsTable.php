@@ -117,7 +117,7 @@ class BiditemsTable extends Table
                 $result = (bool)preg_match('/\.gif$|\.png$|\.jpg$|\.jpeg$/i', $entity['image_name']);
                 return $result;
             }, 'extension', [
-                'errorFields' => 'image_name',
+                'errorField' => 'image_name',
                 'message' => '画像の拡張子が無効です'
             ]);
 
