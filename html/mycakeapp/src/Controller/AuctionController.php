@@ -96,31 +96,31 @@ class AuctionController extends AuctionBaseController
 			// データ挿入
 			$biditem = $this->Biditems->newEntity($data);
 			$biditem->image_name = $_FILES['image_name']['name'];
-			// id,image_name以外を一旦保存			
-			$this->Biditems->save($biditem);
-			// 更新
-			$biditem = $this->Biditems->patchEntity($biditem, $data);
-			// pathinfoで配列で拡張子取り出す
-			$path_parts = pathinfo($biditem['image_name']);
-			// 拡張子を変数に入れる
-			$fileExt = $path_parts["extension"] ?? '';
-			// ファイル名を変更
-			if ($fileExt) {
-				$biditem->image_name = $biditem['id'] . '.' . $fileExt;
-			}
-			// もし保存できたら
+			// idを取得するため一旦保存
 			if ($this->Biditems->save($biditem)) {
-				// 画像データをとってくる
-				$file = $_FILES['image_name']['tmp_name'];
-				// パスの指定
-				$filepath = '/var/www/html/mycakeapp/webroot/img/auction/' . $biditem['id'] . '.' . $fileExt;
-				// move_uploaded_fileで行先を指定
-				$success = move_uploaded_file($file, $filepath);
-				// 成功時のメッセージ
-				$this->Flash->success(__('保存しました。'));
-				// トップページ（index）に移動
-				return $this->redirect(['action' => 'index']);
-				// }
+				// 更新
+				$biditem = $this->Biditems->patchEntity($biditem, $data);
+				// pathinfoで配列で拡張子取り出す
+				$path_parts = pathinfo($biditem['image_name']);
+				// 拡張子を変数に入れる
+				$fileExt = $path_parts["extension"] ?? '';
+				// ファイル名を変更
+				if ($fileExt) {
+					$biditem->image_name = $biditem['id'] . '.' . $fileExt;
+				}
+				// もし保存できたら
+				if ($this->Biditems->save($biditem)) {
+					// 画像データをとってくる
+					$file = $_FILES['image_name']['tmp_name'];
+					// パスの指定
+					$filepath = '/var/www/html/mycakeapp/webroot/img/auction/' . $biditem['id'] . '.' . $fileExt;
+					// move_uploaded_fileで行先を指定
+					$success = move_uploaded_file($file, $filepath);
+					// 成功時のメッセージ
+					$this->Flash->success(__('保存しました。'));
+					// トップページ（index）に移動
+					return $this->redirect(['action' => 'index']);
+				}
 			}
 			// 失敗時のメッセージ
 			$this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
