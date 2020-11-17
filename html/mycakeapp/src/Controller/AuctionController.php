@@ -103,7 +103,7 @@ class AuctionController extends AuctionBaseController
 			// pathinfoで配列で拡張子取り出す
 			$path_parts = pathinfo($biditem['image_name']);
 			// 拡張子を変数に入れる
-			$fileExt = $path_parts["extension"];
+			$fileExt = $path_parts["extension"] ?? ' ' ;
 			// ファイル名を変更
 			if ($fileExt) {
 				$biditem->image_name = $biditem['id'] . '.' . $fileExt;
