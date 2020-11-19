@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 
 /**
@@ -47,7 +48,7 @@ class BiditemsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
-        $this->hasOne('Bidinfo', [
+        $this->hasMany('Bidinfo', [
             'foreignKey' => 'biditem_id',
         ]);
         $this->hasMany('Bidrequests', [
@@ -63,6 +64,7 @@ class BiditemsTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
+
         $validator
             ->integer('id')
             ->allowEmptyString('id', null, 'create');
@@ -74,7 +76,20 @@ class BiditemsTable extends Table
             ->notEmptyString('name');
 
         $validator
-            ->boolean('finished')
+            ->scalar('iteminfo')
+            ->maxLength('iteminfo', 1000, '1000文字以内で入力してください')
+            ->requirePresence('iteminfo', 'create')
+            ->notEmptyString('iteminfo', '商品の詳細情報を入力してください');
+
+        $validator
+            ->scalar('image_name')
+            ->maxLength('image_name', 255)
+            ->requirePresence('image_name', 'create')
+            ->notEmptyFile('image_name', '画像ファイルを添付してください');
+
+        $validator
+            ->scalar('finished')
+            ->maxLength('finished', 255)
             ->requirePresence('finished', 'create')
             ->notEmptyString('finished');
 
@@ -82,7 +97,6 @@ class BiditemsTable extends Table
             ->dateTime('endtime')
             ->requirePresence('endtime', 'create')
             ->notEmptyDateTime('endtime');
-
         return $validator;
     }
 
@@ -95,7 +109,17 @@ class BiditemsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules
+            ->add($rules->existsIn(['user_id'], 'Users'));
+
+        $rules
+            ->add(function ($entity) {
+                $result = (bool)preg_match('/\.gif$|\.png$|\.jpg$|\.jpeg$/i', $entity['image_name']);
+                return $result;
+            }, 'extension', [
+                'errorField' => 'image_name',
+                'message' => '画像の拡張子が無効です'
+            ]);
 
         return $rules;
     }

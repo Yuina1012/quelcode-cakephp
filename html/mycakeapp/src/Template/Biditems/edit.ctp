@@ -29,8 +29,10 @@
         <?php
             echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('name');
+            echo $this->Form->control('item_name');
+            echo $this->Form->control('iteminfo');
             echo $this->Form->control('finished');
-            echo $this->Form->control('endtime');
+            echo $this->Form->control('endtime', ['empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
