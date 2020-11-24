@@ -10,6 +10,11 @@ use Cake\ORM\Entity;
  * @property int $biditem_id
  * @property int $user_id
  * @property int $price
+ * @property string $buyer_name
+ * @property string $buyer_address
+ * @property string $buyer_tel
+ * @property int $status
+ * @property \Cake\I18n\Time $modified
  * @property \Cake\I18n\Time $created
  *
  * @property \App\Model\Entity\Biditem $biditem

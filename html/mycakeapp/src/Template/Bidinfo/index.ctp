@@ -25,6 +25,11 @@
                 <th scope="col"><?= $this->Paginator->sort('biditem_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('price') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('buyer_name') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('buyer_address') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('buyer_tel') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('status') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -34,8 +39,13 @@
             <tr>
                 <td><?= $this->Number->format($bidinfo->id) ?></td>
                 <td><?= $bidinfo->has('biditem') ? $this->Html->link($bidinfo->biditem->name, ['controller' => 'Biditems', 'action' => 'view', $bidinfo->biditem->id]) : '' ?></td>
-                <td><?= $bidinfo->has('user') ? $this->Html->link($bidinfo->user->id, ['controller' => 'Users', 'action' => 'view', $bidinfo->user->id]) : '' ?></td>
+                <td><?= $bidinfo->has('user') ? $this->Html->link($bidinfo->user->username, ['controller' => 'Users', 'action' => 'view', $bidinfo->user->id]) : '' ?></td>
                 <td><?= $this->Number->format($bidinfo->price) ?></td>
+                <td><?= h($bidinfo->buyer_name) ?></td>
+                <td><?= h($bidinfo->buyer_address) ?></td>
+                <td><?= h($bidinfo->buyer_tel) ?></td>
+                <td><?= $this->Number->format($bidinfo->status) ?></td>
+                <td><?= h($bidinfo->modified) ?></td>
                 <td><?= h($bidinfo->created) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $bidinfo->id]) ?>

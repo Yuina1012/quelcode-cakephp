@@ -156,6 +156,20 @@ class AuctionController extends AuctionBaseController
 		$this->set(compact('bidrequest', 'biditem'));
 	}
 
+	// 落札後の取引
+	public function bidinfo(){
+		$biditem = $this->Bidinfo->newEntity();
+		if($this->request->is('post')){
+			$biditem = $this->Bidinfo->patchEntity($biditem,$this->request->getData());
+			if($this->Bidinfo->save($biditem)){
+				$this->Flash->success(__('保存しました'));
+			}else{
+				$this->Flash->error(__('保存に失敗しました'));
+			}
+		}
+
+	}
+
 	// 落札者とのメッセージ
 	public function msg($bidinfo_id = null)
 	{

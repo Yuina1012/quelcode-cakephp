@@ -67,24 +67,12 @@ class BidinfoTable extends Table
             ->integer('id')
             ->allowEmptyString('id', null, 'create');
 
-            $validator
-            ->integer('biditem_id')
-            ->maxLength('biditem_id', 11)
-            ->requirePresence('biditem_id', 'create')
-            ->notEmptyString('biditem_id');
+        $validator
+            ->integer('price')
+            ->requirePresence('price', 'create')
+            ->notEmptyString('price');
 
-            $validator
-            ->integer('user_id')
-            ->maxLength('user_id', 11)
-            ->requirePresence('user_id', 'create')
-            ->notEmptyString('user_id');
-
-            $validator
-                ->integer('price')
-                ->requirePresence('price', 'create')
-                ->notEmptyString('price');
-
-            $validator
+        $validator
             ->scalar('buyer_name')
             ->maxLength('buyer_name', 100)
             ->requirePresence('buyer_name', 'create')
@@ -103,15 +91,7 @@ class BidinfoTable extends Table
             ->notEmptyString('buyer_tel','電話番号を入力してください');
 
         $validator
-            ->integer('status')
-            ->maxLength('status', 1)
-            ->requirePresence('status', 'create')
             ->notEmptyString('status');
-
-        $validator
-            ->dateTime('modified')
-            ->requirePresence('modified', 'create')
-            ->notEmptyString('modified');
 
         return $validator;
     }

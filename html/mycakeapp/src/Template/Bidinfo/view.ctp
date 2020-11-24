@@ -28,7 +28,19 @@
         </tr>
         <tr>
             <th scope="row"><?= __('User') ?></th>
-            <td><?= $bidinfo->has('user') ? $this->Html->link($bidinfo->user->id, ['controller' => 'Users', 'action' => 'view', $bidinfo->user->id]) : '' ?></td>
+            <td><?= $bidinfo->has('user') ? $this->Html->link($bidinfo->user->username, ['controller' => 'Users', 'action' => 'view', $bidinfo->user->id]) : '' ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Buyer Name') ?></th>
+            <td><?= h($bidinfo->buyer_name) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Buyer Address') ?></th>
+            <td><?= h($bidinfo->buyer_address) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Buyer Tel') ?></th>
+            <td><?= h($bidinfo->buyer_tel) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
@@ -37,6 +49,14 @@
         <tr>
             <th scope="row"><?= __('Price') ?></th>
             <td><?= $this->Number->format($bidinfo->price) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Status') ?></th>
+            <td><?= $this->Number->format($bidinfo->status) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Modified') ?></th>
+            <td><?= h($bidinfo->modified) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>
