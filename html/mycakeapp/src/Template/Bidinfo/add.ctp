@@ -24,6 +24,10 @@
             echo $this->Form->control('biditem_id', ['options' => $biditems]);
             echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('price');
+            echo $this->Form->control('buyer_name');
+            echo $this->Form->control('buyer_address');
+            echo $this->Form->control('buyer_tel');
+            echo $this->Form->control('status');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
