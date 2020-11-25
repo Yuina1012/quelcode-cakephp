@@ -68,7 +68,11 @@ class AuctionController extends AuctionBaseController
 				$bidinfo->user_id = $bidrequest->user->id;
 				$bidinfo->user = $bidrequest->user;
 				$bidinfo->price = $bidrequest->price;
-				$this->Bidinfo->save($bidinfo);
+				// 課題２で追加したカラム
+				$bidinfo->buyer_name = '';
+				$bidinfo->buyer_address = '';
+				$bidinfo->buyer_tel = '';
+					$this->Bidinfo->save($bidinfo);
 			}
 			// Biditemのbidinfoに$bidinfoを設定
 			$biditem->bidinfo = $bidinfo;
@@ -157,17 +161,17 @@ class AuctionController extends AuctionBaseController
 	}
 
 	// 落札後の取引
-	public function bidinfo(){
+	public function bidinfo()
+	{
 		$biditem = $this->Bidinfo->newEntity();
-		if($this->request->is('post')){
-			$biditem = $this->Bidinfo->patchEntity($biditem,$this->request->getData());
-			if($this->Bidinfo->save($biditem)){
+		if ($this->request->is('post')) {
+			$biditem = $this->Bidinfo->patchEntity($biditem, $this->request->getData());
+			if ($this->Bidinfo->save($biditem)) {
 				$this->Flash->success(__('保存しました'));
-			}else{
+			} else {
 				$this->Flash->error(__('保存に失敗しました'));
 			}
 		}
-
 	}
 
 	// 落札者とのメッセージ
