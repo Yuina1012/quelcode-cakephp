@@ -72,7 +72,7 @@ class AuctionController extends AuctionBaseController
 				$bidinfo->buyer_name = '';
 				$bidinfo->buyer_address = '';
 				$bidinfo->buyer_tel = '';
-					$this->Bidinfo->save($bidinfo);
+				$this->Bidinfo->save($bidinfo);
 			}
 			// Biditemのbidinfoに$bidinfoを設定
 			$biditem->bidinfo = $bidinfo;
@@ -130,7 +130,7 @@ class AuctionController extends AuctionBaseController
 			$this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
 		}
 		// 値を保管
-		$this->set(compact('biditem'));
+		$this->set(compact('biditem', 'bidinfo'));
 	}
 
 	// 入札の処理
@@ -161,19 +161,23 @@ class AuctionController extends AuctionBaseController
 	}
 
 	// 落札後の取引
-	public function bidinfo()
+	public function bidinfo($id = null)
 	{
-		$biditem = $this->Bidinfo->newEntity();
-		if ($this->request->is('post')) {
-			$biditem = $this->Bidinfo->patchEntity($biditem, $this->request->getData());
-			if ($this->Bidinfo->save($biditem)) {
-				$this->Flash->success(__('保存しました'));
+		$bidinfo = $this->Bidinfo->get($id, [
+            'contain' => [],
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $bidinfo= $this->Bidinfo->patchEntity($bidinfo, $this->request->getData());
+
+			if ($this->Bidinfo->save($bidinfo)) {
+				$this->Flash->success(__('保存しました。'));
 			} else {
-				$this->Flash->error(__('保存に失敗しました'));
+				$this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
 			}
 		}
-	}
 
+		$this->set(compact('bidinfo'));
+	}
 	// 落札者とのメッセージ
 	public function msg($bidinfo_id = null)
 	{
