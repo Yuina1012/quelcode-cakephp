@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 use Cake\Event\Event; // added.
+use Cake\ORM\TableRegistry;
 use Exception; // added.
 
 class AuctionController extends AuctionBaseController
@@ -129,8 +130,9 @@ class AuctionController extends AuctionBaseController
 			// 失敗時のメッセージ
 			$this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
 		}
+
 		// 値を保管
-		$this->set(compact('biditem', 'bidinfo'));
+		$this->set(compact('biditem'));
 	}
 
 	// 入札の処理
@@ -164,20 +166,57 @@ class AuctionController extends AuctionBaseController
 	public function bidinfo($id = null)
 	{
 		$bidinfo = $this->Bidinfo->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $bidinfo= $this->Bidinfo->patchEntity($bidinfo, $this->request->getData());
+			'contain' => [],
+		]);
+		if ($bidinfo->status == 0) {
+			// 入力フォームから落札者の詳細情報編集
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				$bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData());
+				// 住所入力済みのstatus1にする
+				$bidinfo->status = 1;
+				if ($this->Bidinfo->save($bidinfo)) {
+					$this->Flash->success(__('保存しました。'));
+					$this->redirect($this->request->referer());
+				} else {
+					$this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+					$this->redirect($this->request->referer());
+				}
+			}
+			// もし落札済み未発送なら
+		} else if ($bidinfo->status === 1) {
+			// 発送されたらstatusを2にする
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				// データ挿入
+				$bidinfo->status = 2;
+				// もし保存できたら
+				if ($this->Bidinfo->save($bidinfo)) {
+					$this->Flash->success(__('発送しました。'));
+					$this->redirect($this->request->referer());
+				} else {
+					$this->Flash->error(__('発送連絡エラーです。'));
+				}
+			}
 
-			if ($this->Bidinfo->save($bidinfo)) {
-				$this->Flash->success(__('保存しました。'));
-			} else {
-				$this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+			// もし発送済みなら
+		} else if($bidinfo->status === 2) {
+			// 受け取り完了したらstatusを3にする
+			if ($this->request->is(['patch', 'post', 'put'])) {
+				// データ挿入
+				$bidinfo->status = 3;
+				// もし保存できたら
+				if ($this->Bidinfo->save($bidinfo)) {
+
+					$this->Flash->success(__('受け取りました。'));
+					$this->redirect($this->request->referer());
+				} else {
+					$this->Flash->error(__('受け取りエラーです。'));
+				}
 			}
 		}
 
 		$this->set(compact('bidinfo'));
 	}
+
 	// 落札者とのメッセージ
 	public function msg($bidinfo_id = null)
 	{
