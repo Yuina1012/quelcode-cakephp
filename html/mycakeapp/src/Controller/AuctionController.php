@@ -166,61 +166,67 @@ class AuctionController extends AuctionBaseController
 	public function bidinfo($id = null)
 	{
 		$bidinfo = $this->Bidinfo->get($id, [
-			'contain' => [],
+			'contain' => ['Users', 'Biditems', 'Biditems.Users']
 		]);
 		// ログインユーザーID
-		$user = $this->Auth->User('id');		
+		$user = $this->Auth->User('id');
+		// 出品者ID
+		$seller = $bidinfo->biditem->user_id;
 		// 落札者ID
 		$buyer = $bidinfo->user_id;
 
-		// もし落札者情報未入力、ログインユーザーが落札者なら
-		if ($bidinfo->status == 0 && $user == $buyer) {
-			// 入力フォームから落札者の詳細情報編集
-			if ($this->request->is(['patch', 'post', 'put'] )) {
-				$bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData());
-				// 住所入力済みのstatus1にする
-				$bidinfo->status = 1;
-				if ($this->Bidinfo->save($bidinfo)) {
-					$this->Flash->success(__('保存しました。'));
-					$this->redirect($this->request->referer());
-				} else {
-					$this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
-					$this->redirect($this->request->referer());
+		// 出品者または落札者なら
+		if (($user === $seller )|| ($user ===$buyer)) {
+			// もし落札者情報未入力、ログインユーザーが落札者なら
+			if ($bidinfo->status == 0 && $user === $buyer) {
+				// 入力フォームから落札者の詳細情報編集
+				if ($this->request->is(['patch', 'post', 'put'])) {
+					$bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData());
+					// 住所入力済みのstatus1にする
+					$bidinfo->status = 1;
+					if ($this->Bidinfo->save($bidinfo)) {
+						$this->Flash->success(__('保存しました。'));
+						$this->redirect($this->request->referer());
+					} else {
+						$this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
+						$this->redirect($this->request->referer());
+					}
 				}
-			}
-			// もし落札済み未発送なら
-		} else if ($bidinfo->status == 1 && $user == $buyer) {
-			// 発送されたらstatusを2にする
-			if ($this->request->is(['patch', 'post', 'put'])) {
-				// データ挿入
-				$bidinfo->status = 2;
-				// もし保存できたら
-				if ($this->Bidinfo->save($bidinfo)) {
-					$this->Flash->success(__('発送しました。'));
-					$this->redirect($this->request->referer());
-				} else {
-					$this->Flash->error(__('発送連絡エラーです。'));
+				// もし落札済み未発送,出品者なら
+			} else if ($bidinfo->status == 1 && $user == $seller) {
+				// 発送されたらstatusを2にする
+				if ($this->request->is(['patch', 'post', 'put'])) {
+					// データ挿入
+					$bidinfo->status = 2;
+					// もし保存できたら
+					if ($this->Bidinfo->save($bidinfo)) {
+						$this->Flash->success(__('発送しました。'));
+						$this->redirect($this->request->referer());
+					} else {
+						$this->Flash->error(__('発送連絡エラーです。'));
+					}
 				}
-			}
 
-			// もし発送済みなら
-		} else if($bidinfo->status == 2 && $user == $buyer) {
-			// 受け取り完了したらstatusを3にする
-			if ($this->request->is(['patch', 'post', 'put'])) {
-				// データ挿入
-				$bidinfo->status = 3;
-				// もし保存できたら
-				if ($this->Bidinfo->save($bidinfo)) {
+				// もし発送済み、未受け取り、落札者なら
+			} else if ($bidinfo->status == 2 && $user == $buyer) {
+				// 受け取り完了したらstatusを3にする
+				if ($this->request->is(['patch', 'post', 'put'])) {
+					// データ挿入
+					$bidinfo->status = 3;
+					// もし保存できたら
+					if ($this->Bidinfo->save($bidinfo)) {
 
-					$this->Flash->success(__('受け取りました。'));
-					$this->redirect($this->request->referer());
-				} else {
-					$this->Flash->error(__('受け取りエラーです。'));
+						$this->Flash->success(__('受け取りました。'));
+						$this->redirect($this->request->referer());
+					} else {
+						$this->Flash->error(__('受け取りエラーです。'));
+					}
 				}
 			}
+			$this->set(compact('bidinfo'));
+		}else{
+			$this->Flash->error(__(''));
 		}
-
-		$this->set(compact('bidinfo'));
 	}
 
 	// 落札者とのメッセージ
