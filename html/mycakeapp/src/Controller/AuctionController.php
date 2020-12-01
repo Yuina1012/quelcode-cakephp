@@ -178,7 +178,7 @@ class AuctionController extends AuctionBaseController
 		// 出品者または落札者なら
 		if (($user === $seller) || ($user === $buyer)) {
 			// もし落札者情報未入力、ログインユーザーが落札者なら
-			if ($bidinfo->status == 0 && $user === $buyer) {
+			if ($bidinfo->status === 0 && $user === $buyer) {
 				// 入力フォームから落札者の詳細情報編集
 				if ($this->request->is(['patch', 'post', 'put'])) {
 					$bidinfo = $this->Bidinfo->patchEntity($bidinfo, $this->request->getData());
@@ -193,7 +193,7 @@ class AuctionController extends AuctionBaseController
 					}
 				}
 				// もし落札済み未発送,出品者なら
-			} else if ($bidinfo->status == 1 && $user == $seller) {
+			} else if ($bidinfo->status === 1 && $user === $seller) {
 				// 発送されたらstatusを2にする
 				if ($this->request->is(['patch', 'post', 'put'])) {
 					// データ挿入
@@ -208,7 +208,7 @@ class AuctionController extends AuctionBaseController
 				}
 
 				// もし発送済み、未受け取り、落札者なら
-			} else if ($bidinfo->status == 2 && $user == $buyer) {
+			} else if ($bidinfo->status === 2 && $user === $buyer) {
 				// 受け取り完了したらstatusを3にする
 				if ($this->request->is(['patch', 'post', 'put'])) {
 					// データ挿入
