@@ -23,11 +23,11 @@ use function PHPSTORM_META\type;
 			<table class="vertical-table">
 				<tr>
 					<th scope="row">お届け先氏名</th>
-					<td><?= h($bidinfo->buyer_name) ?></td>
+					<td><?= nl2br(h($bidinfo->buyer_name)) ?></td>
 				</tr>
 				<tr>
 					<th scope="row">お届け先住所</th>
-					<td><?= h($bidinfo->buyer_address) ?></td>
+					<td><?= nl2br(h($bidinfo->buyer_address)) ?></td>
 				</tr>
 				<tr>
 					<th scope="row">落札者電話番号</th>
@@ -42,11 +42,11 @@ use function PHPSTORM_META\type;
 			<table class="vertical-table">
 				<tr>
 					<th scope="row">お届け先氏名</th>
-					<td><?= h($bidinfo->buyer_name) ?></td>
+					<td><?= nl2br(h($bidinfo->buyer_name)) ?></td>
 				</tr>
 				<tr>
 					<th scope="row">お届け先住所</th>
-					<td><?= h($bidinfo->buyer_address) ?></td>
+					<td><?= nl2br(h($bidinfo->buyer_address)) ?></td>
 				</tr>
 				<tr>
 					<th scope="row">落札者電話番号</th>
