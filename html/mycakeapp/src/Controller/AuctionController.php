@@ -203,7 +203,7 @@ class AuctionController extends AuctionBaseController
 						$this->Flash->success(__('発送しました。'));
 						$this->redirect($this->request->referer());
 					} else {
-					$bidinfo->status = 1;
+						$bidinfo->status = 1;
 						$this->Flash->error(__('発送連絡エラーです。'));
 					}
 				}
@@ -220,7 +220,7 @@ class AuctionController extends AuctionBaseController
 						$this->Flash->success(__('受け取りました。'));
 						$this->redirect($this->request->referer());
 					} else {
-					$bidinfo->status = 2;
+						$bidinfo->status = 2;
 						$this->Flash->error(__('受け取りエラーです。'));
 					}
 				}
