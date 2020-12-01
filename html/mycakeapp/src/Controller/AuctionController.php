@@ -188,8 +188,8 @@ class AuctionController extends AuctionBaseController
 						$this->Flash->success(__('保存しました。'));
 						$this->redirect($this->request->referer());
 					} else {
+						$bidinfo->status = 0;
 						$this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
-						$this->redirect($this->request->referer());
 					}
 				}
 				// もし落札済み未発送,出品者なら
@@ -203,6 +203,7 @@ class AuctionController extends AuctionBaseController
 						$this->Flash->success(__('発送しました。'));
 						$this->redirect($this->request->referer());
 					} else {
+					$bidinfo->status = 1;
 						$this->Flash->error(__('発送連絡エラーです。'));
 					}
 				}
@@ -219,6 +220,7 @@ class AuctionController extends AuctionBaseController
 						$this->Flash->success(__('受け取りました。'));
 						$this->redirect($this->request->referer());
 					} else {
+					$bidinfo->status = 2;
 						$this->Flash->error(__('受け取りエラーです。'));
 					}
 				}
