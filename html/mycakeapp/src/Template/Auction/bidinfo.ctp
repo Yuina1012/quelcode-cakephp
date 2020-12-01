@@ -37,7 +37,7 @@ use function PHPSTORM_META\type;
 		<?php endif; ?>
 
 		<!-- 住所入力後の画面(両者) -->
-		<?php if ($bidinfo->status === 1 && ($authuser['id'] === $bidinfo->user_id || $bidinfo->biditem->user_id)) : ?>
+		<?php if ($bidinfo->status === 1 && ($authuser['id'] === $bidinfo->user_id || $authuser['id'] === $bidinfo->biditem->user_id)) : ?>
 			<h5>発送先住所</h5>
 			<table class="vertical-table">
 				<tr>
@@ -53,9 +53,6 @@ use function PHPSTORM_META\type;
 					<td><?= h($bidinfo->buyer_tel) ?></td>
 				</tr>
 			</table>
-			<!-- その他ユーザー -->
-		<?php elseif ($bidinfo->status === 1 && ($authuser['id'] != ($bidinfo->user_id && $bidinfo->biditem->user_id))) : ?>
-			<p>※このページは表示できません</p>
 		<?php endif; ?>
 
 		<!-- 出品者 -->
