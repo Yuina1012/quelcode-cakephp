@@ -176,7 +176,7 @@ class AuctionController extends AuctionBaseController
 		$buyer = $bidinfo->user_id;
 
 		// 出品者または落札者なら
-		if (($user === $seller )|| ($user ===$buyer)) {
+		if (($user === $seller) || ($user === $buyer)) {
 			// もし落札者情報未入力、ログインユーザーが落札者なら
 			if ($bidinfo->status == 0 && $user === $buyer) {
 				// 入力フォームから落札者の詳細情報編集
@@ -224,7 +224,7 @@ class AuctionController extends AuctionBaseController
 				}
 			}
 			$this->set(compact('bidinfo'));
-		}else{
+		} else {
 			$this->Flash->error(__(''));
 		}
 	}
