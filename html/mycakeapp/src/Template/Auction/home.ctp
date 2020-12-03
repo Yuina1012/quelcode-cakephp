@@ -18,12 +18,13 @@
 				<td><?= h($info->created) ?></td>
 				<td class="actions">
 					<?= $this->Html->link(__('View'), ['action' => 'msg', $info->id]) ?>
-					<?php if ($biditem['finished'] = 1) : ?>
-				<td class="Transcations">
-					<?= $this->Html->link(__('Transcation'), ['action' => 'bidinfo', $info->id]) ?>
 				</td>
-			<?php endif; ?>
-			</td>
+				<?php if ($info->biditem->finished === TRUE) : ?>
+					<td class="Transcations">
+						<?= $this->Html->link(__('Transcation'), ['action' => 'bidinfo', $info->id]) ?>
+					</td>
+				<?php endif; ?>
+				</td>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>
