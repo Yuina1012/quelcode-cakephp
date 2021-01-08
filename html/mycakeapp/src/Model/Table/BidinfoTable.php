@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -71,6 +72,27 @@ class BidinfoTable extends Table
             ->integer('price')
             ->requirePresence('price', 'create')
             ->notEmptyString('price');
+
+        $validator
+            ->scalar('buyer_name')
+            ->maxLength('buyer_name', 100)
+            ->requirePresence('buyer_name', 'create')
+            ->notEmptyString('buyer_name', '氏名を入力してください');
+
+        $validator
+            ->scalar('buyer_address')
+            ->maxLength('buyer_address', 255)
+            ->requirePresence('buyer_address', 'create')
+            ->notEmptyString('buyer_address', '住所を入力してください');
+
+        $validator
+            ->integer('buyer_tel', '電話番号は数字のみ入力してください')
+            ->maxLength('buyer_tel', 13)
+            ->requirePresence('buyer_tel', 'create')
+            ->notEmptyString('buyer_tel', '電話番号を入力してください');
+
+        $validator
+            ->notEmptyString('status');
 
         return $validator;
     }

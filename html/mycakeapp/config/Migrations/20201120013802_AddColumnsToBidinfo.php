@@ -2,7 +2,7 @@
 
 use Migrations\AbstractMigration;
 
-class CreateBiditems extends AbstractMigration
+class AddColumnsToBidinfo extends AbstractMigration
 {
     /**
      * Change Method.
@@ -13,39 +13,31 @@ class CreateBiditems extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('biditems');
-        $table->addColumn('user_id', 'integer', [
-            'default' => null,
-            'limit' => 11,
-            'null' => false,
-        ]);
-        $table->addColumn('name', 'string', [
+        $table = $this->table('bidinfo');
+        $table->addColumn('buyer_name', 'string', [
             'default' => null,
             'limit' => 100,
             'null' => false,
         ]);
-        $table->addColumn('image_name', 'string', [
+        $table->addColumn('buyer_address', 'string', [
             'default' => null,
             'limit' => 255,
             'null' => false,
         ]);
-        $table->addColumn('item_info', 'string', [
+        $table->addColumn('buyer_tel', 'string', [
             'default' => null,
-            'limit' => 1000,
+            'limit' => 13,
             'null' => false,
         ]);
-        $table->addColumn('finished', 'boolean', [
+        $table->addColumn('status', 'string', [
             'default' => null,
+            'limit' => 255,
             'null' => false,
         ]);
-        $table->addColumn('endtime', 'datetime', [
-            'default' => null,
-            'null' => false,
-        ]);
-        $table->addColumn('created', 'datetime', [
+        $table->addColumn('modified', 'datetime', [
             'default' => null,
             'null' => false,
         ]);
-        $table->create();
+        $table->update();
     }
 }
