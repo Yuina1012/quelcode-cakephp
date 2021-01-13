@@ -71,6 +71,13 @@
 					<?php endforeach; ?>
 				</tbody>
 			</table>
+			<!-- タイマー -->
+			<?php
+			$date1 = new DateTime(); //現在時刻
+			$end_time  = new DateTime($biditem->endtime); //終了時間
+			$interval = $end_time->diff($date1); //差分
+			$finished = $interval->invert; //0=終了済み,1= 落札可能
+			?>
 		<?php else : ?>
 			<p><?= '※入札は、まだありません。' ?></p>
 		<?php endif; ?>
