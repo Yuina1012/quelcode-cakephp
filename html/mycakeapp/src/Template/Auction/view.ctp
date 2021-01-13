@@ -95,5 +95,9 @@
 		<p><?= '※入札は、終了しました。' ?></p>
 	<?php endif; ?>
 </div>
+<!-- javascriptへ変数を渡す -->
+<script type="text/javascript">
+    const dif_time = <?php echo $dif_time ?>; //残り時間(秒)
+</script>
 <!-- javascript読み込み -->
 <?= $this->Html->script('index.js'); ?>
