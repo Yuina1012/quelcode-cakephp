@@ -28,23 +28,23 @@
 		<th scope="row"><?= __('終了した？') ?></th>
 		<td><?= $biditem->finished ? __('Yes') : __('No'); ?></td>
 	</tr>
-				<!-- タイマー -->
-				<?php
-			$date1 = new DateTime(); //現在時刻
-			$end_time  = new DateTime($biditem->endtime); //終了時間
-			$interval = $end_time->diff($date1); //差分
-			$finished = $interval->invert; //0=終了済み,1= 落札可能
-			if ($finished === 1) { //もし終了していなければ
-				$dif_time_str = $interval->d * 24 * 60 * 60 + +$interval->h * 60 * 60 + $interval->i * 60 + $interval->s; //秒に変換
-				$dif_time = intval($dif_time_str); //string型からint型に変換
-			} else {
-				$dif_time = 0;
-			}
-			?>
+	<!-- タイマー -->
+	<?php
+	$date1 = new DateTime(); //現在時刻
+	$end_time  = new DateTime($biditem->endtime); //終了時間
+	$interval = $end_time->diff($date1); //差分
+	$finished = $interval->invert; //0=終了済み,1= 落札可能
+	if ($finished === 1) { //もし終了していなければ
+		$dif_time_str = $interval->d * 24 * 60 * 60 + +$interval->h * 60 * 60 + $interval->i * 60 + $interval->s; //秒に変換
+		$dif_time = intval($dif_time_str); //string型からint型に変換
+	} else {
+		$dif_time = 0;
+	}
+	?>
 </table>
 <!-- タイマー表示箇所 -->
 <h4>COUNT DOWN TIMER</h4>
-<?php echo $this->Html->tag('span', '', array('id' => 'timer'));?>
+<?php echo $this->Html->tag('span', '', array('id' => 'timer')); ?>
 <br>
 <div class="related">
 	<h4><?= __('落札情報') ?></h4>
@@ -88,16 +88,16 @@
 						</tr>
 					<?php endforeach; ?>
 				</tbody>
+			<?php else : ?>
+				<p><?= '※入札は、まだありません。' ?></p>
+			<?php endif; ?>
 		<?php else : ?>
-			<p><?= '※入札は、まだありません。' ?></p>
+			<p><?= '※入札は、終了しました。' ?></p>
 		<?php endif; ?>
-	<?php else : ?>
-		<p><?= '※入札は、終了しました。' ?></p>
-	<?php endif; ?>
 </div>
 <!-- javascriptへ変数を渡す -->
 <script type="text/javascript">
-    const dif_time = <?php echo $dif_time ?>; //残り時間(秒)
+	const dif_time = <?php echo $dif_time ?>; //残り時間(秒)
 </script>
 <!-- javascript読み込み -->
 <?= $this->Html->script('index.js'); ?>
