@@ -78,3 +78,5 @@
 		<p><?= '※入札は、終了しました。' ?></p>
 	<?php endif; ?>
 </div>
+<!-- javascript読み込み -->
+<?= $this->Html->script('index.js'); ?>
