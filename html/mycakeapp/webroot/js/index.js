@@ -1,5 +1,5 @@
 let dif = dif_time;//変数に定数を代入
-setInterval(function () {
+setInterval(()=> {
 	if (dif > 0) {
 		dif = dif - 1;
 		console.log(dif);
