@@ -1,5 +1,5 @@
 let dif = dif_time;//変数に定数を代入
-setInterval(() => {
+document.addEventListener("DOMContentLoaded",setInterval(() => {
 	if (dif > 0) {
 		dif = dif - 1;
 		// 表記
@@ -15,4 +15,4 @@ setInterval(() => {
 	} else {
 		document.getElementById('timer').innerHTML = "終了しました";
 	}
-}, 1000);
+}, 1000));
