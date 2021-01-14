@@ -35,7 +35,7 @@
 	$interval = $end_time->diff($date1); //差分
 	$finished = $interval->invert; //0=終了済み,1= 落札可能
 	if ($finished === 1) { //もし終了していなければ
-		$dif_time = $interval->d * 24 * 60 * 60 + +$interval->h * 60 * 60 + $interval->i * 60 + $interval->s; //秒に変換
+		$dif_time = $interval->d * 24 * 60 * 60 + $interval->h * 60 * 60 + $interval->i * 60 + $interval->s; //秒に変換
 	} else {
 		$dif_time = 0;
 	}
