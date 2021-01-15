@@ -1,5 +1,5 @@
 let dif = dif_time;//変数に定数を代入
-document.addEventListener("DOMContentLoaded",setInterval(() => {
+const disp_timer = () => { //定数にタイマー処理を入れてsetIntervalの第一引数で実行
 	if (dif > 0) {
 		dif = dif - 1;
 		// 表記
@@ -15,4 +15,6 @@ document.addEventListener("DOMContentLoaded",setInterval(() => {
 	} else {
 		document.getElementById('timer').innerHTML = "終了しました";
 	}
-}, 1000));
+};
+disp_timer();
+setInterval(disp_timer, 1000);
